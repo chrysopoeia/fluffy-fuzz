@@ -1,3 +1,4 @@
+import re
 
 
 class SceneReader(object):
@@ -7,16 +8,22 @@ class SceneReader(object):
         'third_feature': None,
     }
     
-    descriptor_tags = {
-        '#': None,
-    }
-    
     def read(self, file_location):
         with open(file_location, 'r') as scene_file:
-            raw_scene = scene_file.readlines()
+            raw_scene = scene_file.read()
         
-        for line in raw_scene:
-            print line
+        # pattern = r'<[^/].+?>.*?</.+?>'
+        # pattern = r'<([^/].*?)>(.*?)</(.+?)>'
+        
+        pattern = r'<([^/].*?)>(.*?)</(.+?)>'
+        result = re.findall(pattern, raw_scene, flags=re.DOTALL)
+        
+        print result
+        print '======================================================'
+        
+        for x in result:
+            print x
+            print '------------------------------------------------------'
 
 
 if __name__ == '__main__':
