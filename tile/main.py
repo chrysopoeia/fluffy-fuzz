@@ -1,5 +1,12 @@
 import re
 
+# some working patterns for experimental file formats
+CLOSING_TAG_PATTERN = r'<([^/].*?)>(.*?)</(.+?)>'
+NEW_LINE_PATTERN = r'<(.*?)>(.*?)\n\n'
+
+# exprimental patterns
+BLAH_NEW_LINE_PATTERN = r'<(.*?)>(.*?)'
+
 
 class SceneReader(object):
     allowed_features = {
@@ -12,14 +19,8 @@ class SceneReader(object):
         with open(file_location, 'r') as scene_file:
             raw_scene = scene_file.read()
         
-        # pattern = r'<[^/].+?>.*?</.+?>'
-        # pattern = r'<([^/].*?)>(.*?)</(.+?)>'
-        
-        pattern = r'<([^/].*?)>(.*?)</(.+?)>'
+        pattern = BLAH_NEW_LINE_PATTERN
         result = re.findall(pattern, raw_scene, flags=re.DOTALL)
-        
-        print result
-        print '======================================================'
         
         for x in result:
             print x
