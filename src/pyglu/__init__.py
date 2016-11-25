@@ -1,5 +1,5 @@
-from . import event
 from . import config
+from . import event
 
 
 def init(config_path):

@@ -1,11 +1,11 @@
 import re
 
-# some working patterns for experimental file formats
+# some working patterns for experimental file formats :: DOTALL
 CLOSING_TAG_PATTERN = r'<([^/].*?)>(.*?)</(.+?)>'
 NEW_LINE_PATTERN = r'<(.*?)>(.*?)\n\n'
 
-# exprimental patterns
-BLAH_NEW_LINE_PATTERN = r'<(.*?)>(.*?)'
+# experimental patterns
+BLAH_NEW_LINE_PATTERN = r'[<].*?[>].*?'
 
 
 class SceneReader(object):
