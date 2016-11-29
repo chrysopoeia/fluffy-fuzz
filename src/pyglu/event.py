@@ -1,8 +1,3 @@
-class EventListener(object):
-    def handle(self, event):
-        raise NotImplementedError
-
-
 class EventListenerRegistry(object):
     def __init__(self):
         self.active_streams = {}
@@ -16,8 +11,8 @@ class EventListenerRegistry(object):
             self.active_streams.setdefault(stream_id, []).append(listener)
     
     def propagate(self, event):
-        for listener in self.global_listeners + self.active_streams.get(event.type, []):
-            listener.handle(event)
+        for handle in self.global_listeners + self.active_streams.get(event.type, []):
+            handle(event)
 
 
 listeners = EventListenerRegistry()
