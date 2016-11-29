@@ -15,7 +15,7 @@ class UserStats(object):
         self.render()
     
     def handle_update_stats(self, evt):
-        print evt
+        print evt, 'wooot'
     
     def render(self):
         self.surface.fill((255,0,0))
