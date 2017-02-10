@@ -8,13 +8,14 @@ def generate_map_layout(w, h):
 class TileMap(object):
     size = (12, 48)
     
-    def __init__(self):
+    def __init__(self, size=None):
+        self.size = size or self.size
         self.tiles = generate_map_layout(*self.size)
 
 
 class Camera(object):
-    field_of_vision = (400, 300)
-    focal_point = (0, 0)
+    fov = (400, 300)
+    focus = (0, 0)
 
 
 class SceneController(object):
@@ -24,7 +25,7 @@ class SceneController(object):
         self.viewport = viewport
         self.clock = pygame.time.Clock()
         self.camera = Camera()
-        self.tilemap = TileMap()
+        self.map = TileMap()
     
     def handle_events(self):
         events = pygame.event.get()
