@@ -2,11 +2,18 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-# Create your models here.
 
 class WeatherForecast(models.Model):
     date = models.DateField()
-    min_temp = models.IntegerField()
-    max_temp = models.IntegerField()
-    wind = models.IntegerField()
-    rain = models.IntegerField()
+    city = models.IntegerField()
+    
+    min_temp = models.FloatField()
+    max_temp = models.FloatField()
+    wind = models.FloatField()
+    rain = models.FloatField()
+    
+    def __unicode__(self):
+        return "%(city)d " % ()
+    
+    class Meta:
+        unique_together = ('date', 'city')
