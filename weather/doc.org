@@ -1,0 +1,57 @@
+* SPECS
+  Weather App Assignment: 
+  
+  The main goal of the assignment is to test your skills in learning new technologies and gauge code quality. You 
+  will be required to use the Django framework to develop a simple application. You need to setup a virtualenv 
+  for the app and install Django. Read through the django documentation and proceed with the development of 
+  the assignment. Django: http://www.djangoproject.com  
+  
+  Basic Requirements: 
+  ● Your code must be installable inside a virtualenv with eg. “pip install -e .” 
+  
+  App Requirements: 
+  ● Homepage - Logged-out landing page with links to login/register 
+  ● Registration and Login:  
+  Users should be able to register themselves by filling in a form with 3 fields: 
+  email, password, password_repeat 
+  Basic validation should be done on the email address and the two password boxes should match up. 
+  After registering the user should be able to login. 
+  ● Logged in landing page: 
+  After logging in the user should be shown the latest weather forecasts retrieved from the database. 
+  data should be paginated to show 3 records per page. 
+  ● Admin section: 
+  There should be a basic admin section to edit User and Weather records 
+  ● API (REST): 
+  the weather data should be exposed in a simple json format.  
+  Clients authenticate using basic HTTP auth. 
+  ● Use latest django and python 2.7 or 3.4 - You may use any extension libraries you see fit. 
+  ● extra points for tests, packaging, documentation. 
+  ● The delivered code needs to run (obvious - but we have seen some funny results) 
+    - assignments with major bugs will be disqualified. 
+      
+  Forecast data: 
+  The forecast data should be retrieved from http://weather.news24.com/sa/cape-town. The page makes use of 
+  an API to populate weather data, you will have to find the API and use it to store the relevant weather data in 
+  your database(Note: the JSON string returned from this API will need to be fixed before it can be parsed). In 
+  the db you should store the date, min temp, max temp, wind, rain. Ideally the retrieval of the forecast data 
+  would be run as a Django management command via cron. 
+  
+  Once you have completed the assignment please tar/zip and send it back to Byte Orbit. 
+  
+  Good luck 
+
+
+* NOTES
+** Fetch Weather
+*** input
+   POST:: http://weather.news24.com/ajaxpro/TwentyFour.Weather.Web.Ajax,App_Code.ashx
+   
+   HEADER:
+   X-AjaxPro-Method 	GetForecast7Day
+   Content-Type         text/plain; charset=utf-8
+   
+   BODY:
+   {"cityId":"77107"}
+
+*** ouput
+    {"__type":"TwentyFour.Services.Weather.Objects.Location, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","City":"77107","CityName":"Cape Town","Forecasts":[{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":1,"Segment":null,"DaySegment":null,"DayOfWeek":5,"WeekDay":"Thursday","ShortWeekDay":"Thu","Date":new Date(Date.UTC(2017,1,15,22,0,0,0)),"FormattedDate":"Thu, Feb 16","DayLight":"D","SkyDescriptor":"1","Sky":"Sunny","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"6","TemperatureDescription":"Cool","HighTemp":"21","LowTemp":"17","UV":"High","AirDescription":"20","Air":"Beautiful","Description":"Sunny. Cool.","Temperature":null,"WindSpeed":"23","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"1","IconName":"sunny","Cached":false},{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":2,"Segment":null,"DaySegment":null,"DayOfWeek":6,"WeekDay":"Friday","ShortWeekDay":"Fri","Date":new Date(Date.UTC(2017,1,16,22,0,0,0)),"FormattedDate":"Fri, Feb 17","DayLight":"D","SkyDescriptor":"1","Sky":"Sunny","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"8","TemperatureDescription":"Mild","HighTemp":"23","LowTemp":"17","UV":"High","AirDescription":"29","Air":"Comfortable","Description":"Sunny. Mild.","Temperature":null,"WindSpeed":"26","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"1","IconName":"sunny","Cached":false},{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":3,"Segment":null,"DaySegment":null,"DayOfWeek":7,"WeekDay":"Saturday","ShortWeekDay":"Sat","Date":new Date(Date.UTC(2017,1,17,22,0,0,0)),"FormattedDate":"Sat, Feb 18","DayLight":"D","SkyDescriptor":"1","Sky":"Sunny","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"6","TemperatureDescription":"Cool","HighTemp":"21","LowTemp":"17","UV":"High","AirDescription":"20","Air":"Beautiful","Description":"Sunny. Cool.","Temperature":null,"WindSpeed":"32","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"1","IconName":"sunny","Cached":false},{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":4,"Segment":null,"DaySegment":null,"DayOfWeek":1,"WeekDay":"Sunday","ShortWeekDay":"Sun","Date":new Date(Date.UTC(2017,1,18,22,0,0,0)),"FormattedDate":"Sun, Feb 19","DayLight":"D","SkyDescriptor":"12","Sky":"High level clouds","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"6","TemperatureDescription":"Cool","HighTemp":"20","LowTemp":"16","UV":"High","AirDescription":"14","Air":"Windy","Description":"High level clouds. Cool.","Temperature":null,"WindSpeed":"54","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"5","IconName":"high_clouds","Cached":false},{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":5,"Segment":null,"DaySegment":null,"DayOfWeek":2,"WeekDay":"Monday","ShortWeekDay":"Mon","Date":new Date(Date.UTC(2017,1,19,22,0,0,0)),"FormattedDate":"Mon, Feb 20","DayLight":"D","SkyDescriptor":"1","Sky":"Sunny","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"6","TemperatureDescription":"Cool","HighTemp":"22","LowTemp":"16","UV":"High","AirDescription":"21","Air":"Very nice","Description":"Sunny. Cool.","Temperature":null,"WindSpeed":"45","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"1","IconName":"sunny","Cached":false},{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":6,"Segment":null,"DaySegment":null,"DayOfWeek":3,"WeekDay":"Tuesday","ShortWeekDay":"Tue","Date":new Date(Date.UTC(2017,1,20,22,0,0,0)),"FormattedDate":"Tue, Feb 21","DayLight":"D","SkyDescriptor":"12","Sky":"High level clouds","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"8","TemperatureDescription":"Mild","HighTemp":"23","LowTemp":"17","UV":"High","AirDescription":"13","Air":"Breezy","Description":"High level clouds. Mild.","Temperature":null,"WindSpeed":"38","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"5","IconName":"high_clouds","Cached":false},{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":7,"Segment":null,"DaySegment":null,"DayOfWeek":4,"WeekDay":"Wednesday","ShortWeekDay":"Wed","Date":new Date(Date.UTC(2017,1,21,22,0,0,0)),"FormattedDate":"Wed, Feb 22","DayLight":"D","SkyDescriptor":"1","Sky":"Sunny","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"8","TemperatureDescription":"Mild","HighTemp":"24","LowTemp":"19","UV":"High","AirDescription":"29","Air":"Comfortable","Description":"Sunny. Mild.","Temperature":null,"WindSpeed":"37","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"1","IconName":"sunny","Cached":false}],"Cached":false};/*

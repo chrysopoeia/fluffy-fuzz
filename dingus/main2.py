@@ -1,5 +1,4 @@
 import pygame
-import config
 
 
 def generate_map_layout(w, h):
@@ -25,6 +24,8 @@ class SceneController(object):
     def __init__(self, viewport):
         self.viewport = viewport
         self.clock = pygame.time.Clock()
+        self.camera = Camera()
+        self.map = TileMap()
     
     def handle_events(self):
         events = pygame.event.get()
@@ -47,9 +48,10 @@ class SceneController(object):
         return self
 
 
+resolution = (800, 600)
 pygame.init()
 
-viewport = pygame.display.set_mode(config.RESOLUTION)
+viewport = pygame.display.set_mode(resolution)
 scene = SceneController(viewport)
 
 while scene:
