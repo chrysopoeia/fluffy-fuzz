@@ -40,18 +40,32 @@
   
   Good luck 
 
-
 * NOTES
 ** Fetch Weather
 *** input
-   POST:: http://weather.news24.com/ajaxpro/TwentyFour.Weather.Web.Ajax,App_Code.ashx
-   
-   HEADER:
-   X-AjaxPro-Method 	GetForecast7Day
-   Content-Type         text/plain; charset=utf-8
-   
-   BODY:
-   {"cityId":"77107"}
+    POST:: http://weather.news24.com/ajaxpro/TwentyFour.Weather.Web.Ajax,App_Code.ashx
+    
+    HEADER:
+    X-AjaxPro-Method 	GetForecast7Day
+    
+    BODY:
+    {"cityId":"77107"}
 
 *** ouput
     {"__type":"TwentyFour.Services.Weather.Objects.Location, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","City":"77107","CityName":"Cape Town","Forecasts":[{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":1,"Segment":null,"DaySegment":null,"DayOfWeek":5,"WeekDay":"Thursday","ShortWeekDay":"Thu","Date":new Date(Date.UTC(2017,1,15,22,0,0,0)),"FormattedDate":"Thu, Feb 16","DayLight":"D","SkyDescriptor":"1","Sky":"Sunny","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"6","TemperatureDescription":"Cool","HighTemp":"21","LowTemp":"17","UV":"High","AirDescription":"20","Air":"Beautiful","Description":"Sunny. Cool.","Temperature":null,"WindSpeed":"23","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"1","IconName":"sunny","Cached":false},{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":2,"Segment":null,"DaySegment":null,"DayOfWeek":6,"WeekDay":"Friday","ShortWeekDay":"Fri","Date":new Date(Date.UTC(2017,1,16,22,0,0,0)),"FormattedDate":"Fri, Feb 17","DayLight":"D","SkyDescriptor":"1","Sky":"Sunny","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"8","TemperatureDescription":"Mild","HighTemp":"23","LowTemp":"17","UV":"High","AirDescription":"29","Air":"Comfortable","Description":"Sunny. Mild.","Temperature":null,"WindSpeed":"26","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"1","IconName":"sunny","Cached":false},{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":3,"Segment":null,"DaySegment":null,"DayOfWeek":7,"WeekDay":"Saturday","ShortWeekDay":"Sat","Date":new Date(Date.UTC(2017,1,17,22,0,0,0)),"FormattedDate":"Sat, Feb 18","DayLight":"D","SkyDescriptor":"1","Sky":"Sunny","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"6","TemperatureDescription":"Cool","HighTemp":"21","LowTemp":"17","UV":"High","AirDescription":"20","Air":"Beautiful","Description":"Sunny. Cool.","Temperature":null,"WindSpeed":"32","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"1","IconName":"sunny","Cached":false},{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":4,"Segment":null,"DaySegment":null,"DayOfWeek":1,"WeekDay":"Sunday","ShortWeekDay":"Sun","Date":new Date(Date.UTC(2017,1,18,22,0,0,0)),"FormattedDate":"Sun, Feb 19","DayLight":"D","SkyDescriptor":"12","Sky":"High level clouds","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"6","TemperatureDescription":"Cool","HighTemp":"20","LowTemp":"16","UV":"High","AirDescription":"14","Air":"Windy","Description":"High level clouds. Cool.","Temperature":null,"WindSpeed":"54","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"5","IconName":"high_clouds","Cached":false},{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":5,"Segment":null,"DaySegment":null,"DayOfWeek":2,"WeekDay":"Monday","ShortWeekDay":"Mon","Date":new Date(Date.UTC(2017,1,19,22,0,0,0)),"FormattedDate":"Mon, Feb 20","DayLight":"D","SkyDescriptor":"1","Sky":"Sunny","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"6","TemperatureDescription":"Cool","HighTemp":"22","LowTemp":"16","UV":"High","AirDescription":"21","Air":"Very nice","Description":"Sunny. Cool.","Temperature":null,"WindSpeed":"45","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"1","IconName":"sunny","Cached":false},{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":6,"Segment":null,"DaySegment":null,"DayOfWeek":3,"WeekDay":"Tuesday","ShortWeekDay":"Tue","Date":new Date(Date.UTC(2017,1,20,22,0,0,0)),"FormattedDate":"Tue, Feb 21","DayLight":"D","SkyDescriptor":"12","Sky":"High level clouds","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"8","TemperatureDescription":"Mild","HighTemp":"23","LowTemp":"17","UV":"High","AirDescription":"13","Air":"Breezy","Description":"High level clouds. Mild.","Temperature":null,"WindSpeed":"38","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"5","IconName":"high_clouds","Cached":false},{"__type":"TwentyFour.Services.Weather.Objects.Forecast, TwentyFour.Services.Weather, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null","DaySequence":7,"Segment":null,"DaySegment":null,"DayOfWeek":4,"WeekDay":"Wednesday","ShortWeekDay":"Wed","Date":new Date(Date.UTC(2017,1,21,22,0,0,0)),"FormattedDate":"Wed, Feb 22","DayLight":"D","SkyDescriptor":"1","Sky":"Sunny","PrecipitationDescriptor":"","Precipitation":"","TemperatureDescriptor":"8","TemperatureDescription":"Mild","HighTemp":"24","LowTemp":"19","UV":"High","AirDescription":"29","Air":"Comfortable","Description":"Sunny. Mild.","Temperature":null,"WindSpeed":"37","Beaufort":null,"BeaufortDescriptor":null,"WindDirection":null,"WindDirectionAbreviated":null,"WindDirectionDescription":null,"DewPoint":null,"Humidity":null,"Comfort":null,"Visibility":null,"Rainfall":null,"Snowfall":null,"PrecipitationProbability":null,"Icon":"1","IconName":"sunny","Cached":false}],"Cached":false};/*
+
+** SQL
+*** PostgreSQL bulk
+    INSERT INTO forecast_weatherforecast(date, city, min_temp, max_temp, wind, rain)
+    VALUES (), (), ()
+    ON CONFLICT ON CONSTRAINT <forecast_weatherforecast_datecity_constraint_name>
+    DO UPDATE 
+    min_temp=EXLUCDED.min_temp, 
+    max_temp=EXLUCDED.max_temp,
+    wind=EXLUCDED.wind,
+    rain=EXLUCDED.rain
+    
+*** SQLite bulk
+    INSERT OR REPLACE INTO
+    forecast_weatherforecast(date, city, min_temp, max_temp, wind, rain)
+    VALUES (), (), ()
