@@ -40,14 +40,20 @@ class Command(BaseCommand):
     @classmethod
     def import_result(cls, json_result):
         """
-        INSERT INTO forecast_weatherforecast(date, city, min_temp, max_temp, wind, rain) 
+        INSERT INTO forecast_weatherforecast(date, city, min_temp, max_temp, wind, rain)
         VALUES (), ()
-        ON CONFLICT ON CONSTRAINT
+        ON CONFLICT ON CONSTRAINT <forecast_weatherforecast_datecity_constraint_name>
         DO UPDATE 
         min_temp=EXLUCDED.min_temp, 
         max_temp=EXLUCDED.max_temp,
         wind=EXLUCDED.wind,
         rain=EXLUCDED.rain
+        """
+        
+        """
+        INSERT OR REPLACE INTO
+        forecast_weatherforecast(date, city, min_temp, max_temp, wind, rain)
+        VALUES (), (), ()
         """
         
         city = int(json_result['City'])
@@ -58,7 +64,7 @@ class Command(BaseCommand):
             wind = float(forecast['WindSpeed'] or 0)
             rain = float(forecast['Rainfall'] or 0)
             
-            obj, created = WeatherForecast.objects.get_or_create(
+            obj, created = WeatherForecast.objects.update_or_create(
                 city=city,
                 date=datetime(*map(int, forecast['Date'].split(','))),
                 defaults=dict(
@@ -68,13 +74,6 @@ class Command(BaseCommand):
                     rain=rain,
                 )
             )
-            
-            if not created:
-                obj.min_temp = min_temp
-                obj.max_temp = max_temp
-                obj.wind = wind
-                obj.rain = rain
-                obj.save()
     
     @classmethod
     def fetch_forecast(cls, target_city):
