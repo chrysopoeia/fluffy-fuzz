@@ -4,6 +4,8 @@ from .models import WeatherForecast, User
 
 
 class CustomUserAdmin(UserAdmin):
+    list_display = ('email', 'is_active', 'is_staff', 'is_superuser')
+    
     add_fieldsets = (
         (None, {'fields': ('username', 'password1', 'password2')}),
         (('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
