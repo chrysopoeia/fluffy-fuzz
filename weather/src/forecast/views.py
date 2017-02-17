@@ -1,13 +1,20 @@
-from django.shortcuts import render
+from django import forms
 
-from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView, TemplateView
+from django.contrib.auth.forms import UserCreationForm
+from .models import User
+
+
+class UserRegistrationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('email',)
 
 
 class Register(CreateView):
     template_name = 'forecast/register.html'
-    form_class = UserCreationForm
-    success_url = ""
+    form_class = UserRegistrationForm
+    success_url = ''
 
 
 class Home(TemplateView):

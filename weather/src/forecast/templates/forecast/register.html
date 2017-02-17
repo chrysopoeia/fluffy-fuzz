@@ -1,6 +1,12 @@
+<!DOCTYPE html>
 
-<form method="POST">
-{% csrf_token %}
-{{ form.as_p }}
-<button>asdasd</button>
-</form>
+<html>
+  <head></head>
+  <body>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button>Register</button>
+    </form>
+  </body>
+</html>
