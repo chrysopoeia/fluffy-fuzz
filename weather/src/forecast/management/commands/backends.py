@@ -30,9 +30,10 @@ class News24ForecastDecoder(json.JSONDecoder):
 
 
 class News24Forecast(object):
-    @staticmethod
-    def fetch(target_city):
-        return requests.post(
+    response = None
+    
+    def fetch(self, target_city):
+        self.response = requests.post(
             'http://weather.news24.com/ajaxpro/TwentyFour.Weather.Web.Ajax,App_Code.ashx',
             headers={
                 'X-AjaxPro-Method': 'GetForecast7Day',
@@ -40,9 +41,11 @@ class News24Forecast(object):
             json={
                 'cityId': str(target_city),
             })
+        return self.response
     
-    @staticmethod
-    def parse(response):
+    def parse(self, response=None):
+        response = response or self.response
+        
         json_result = response.json(cls=News24ForecastDecoder)
         parsed_results = []
         city = int(json_result['City'])

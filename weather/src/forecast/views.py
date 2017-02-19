@@ -1,21 +1,24 @@
-from django import forms
+from django.views.generic import TemplateView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django.views.generic import CreateView, TemplateView
-from django.contrib.auth.forms import UserCreationForm
-from .models import User
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets
 
-
-class UserRegistrationForm(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ('email',)
-
-
-class Register(CreateView):
-    template_name = 'forecast/register.html'
-    form_class = UserRegistrationForm
-    success_url = ''
+from .serializers import WeatherForecastSerializer
+from .models import WeatherForecast
 
 
 class Home(TemplateView):
-    template_name = 'forecast/home.html'
+    template_name = 'forecast/index.html'
+
+
+class Forecast(LoginRequiredMixin, ListView):
+    template_name = 'forecast/forecast.html'
+    queryset = WeatherForecast.objects.order_by('date')
+    paginate_by = 3
+
+
+class WeatherForecastViewSet(viewsets.ModelViewSet):
+    queryset = WeatherForecast.objects.order_by('date')
+    serializer_class = WeatherForecastSerializer
+    permission_classes = (IsAuthenticated,)

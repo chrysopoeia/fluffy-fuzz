@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'forecast',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -102,7 +103,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'forecast.User'
+AUTH_USER_MODEL = 'account.User'
+
+LOGIN_URL = 'login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
