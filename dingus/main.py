@@ -35,22 +35,25 @@ class SceneController(object):
     def __init__(self, viewport):
         self.viewport = viewport
         self.clock = pygame.time.Clock()
+        self.entities = []
+        self.dt = 0
         
     def handle_events(self):
         events = pygame.event.get()
         
     def tick(self):
-        dt = self.clock.tick(self.fps)
+        self.dt = self.clock.tick(self.fps)
         
-        self.update(dt)
+        self.update()
         self.handle_events()
         
         pygame.display.flip()
         
         return self.next
     
-    def update(self, dt):
-        pass
+    def update(self):
+        for entity in self.entities:
+            entity.update(self)
     
     @property
     def next(self):
@@ -58,7 +61,15 @@ class SceneController(object):
 
 
 class Entity(object):
-    pass
+    pos = (200, 300)
+    radius = 2
+    
+    def update(self, scene):
+        pass
+    
+    def render(self):
+        self.viewport = pygame.Surface((self.radius*2, self.radius*2))
+        pygame.draw.circle(self.viewport, (255,255,255), (self.radius, self.radius), self.radius)
 
 
 class GameController(SceneController):
@@ -67,8 +78,13 @@ class GameController(SceneController):
         
         self.tilemap = TileMap()
         self.tilemap.render()
-        
         self.viewport.blit(self.tilemap.viewport, (12,12))
+        
+        e = Entity()
+        e.render()
+        
+        self.viewport.blit(e.viewport, e.pos)
+        self.entities.append(e)
 
 
 pygame.init()
