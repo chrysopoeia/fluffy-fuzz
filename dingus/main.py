@@ -54,6 +54,11 @@ class SceneController(object):
     def update(self):
         for entity in self.entities:
             entity.update(self)
+        
+        self.viewport.blit(self.tilemap.viewport, (12,12))
+        
+        for entity in self.entities:
+            self.viewport.blit(entity.viewport, entity.pos)
     
     @property
     def next(self):
@@ -61,15 +66,17 @@ class SceneController(object):
 
 
 class Entity(object):
-    pos = (200, 300)
-    radius = 2
+    pos = [200, 300]
+    radius = 3
     
     def update(self, scene):
-        pass
+        self.pos[0] += 1
     
     def render(self):
         self.viewport = pygame.Surface((self.radius*2, self.radius*2))
-        pygame.draw.circle(self.viewport, (255,255,255), (self.radius, self.radius), self.radius)
+        self.viewport.set_colorkey((0,0,0))
+        
+        pygame.draw.circle(self.viewport, (0,0,255), (self.radius, self.radius), self.radius)
 
 
 class GameController(SceneController):
@@ -78,13 +85,12 @@ class GameController(SceneController):
         
         self.tilemap = TileMap()
         self.tilemap.render()
-        self.viewport.blit(self.tilemap.viewport, (12,12))
         
         e = Entity()
         e.render()
         
-        self.viewport.blit(e.viewport, e.pos)
         self.entities.append(e)
+        
 
 
 pygame.init()
