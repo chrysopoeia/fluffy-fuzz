@@ -1,6 +1,7 @@
 import pygame
-import config
 import random
+
+RESOLUTION = (800, 600)
 
 
 def generate_map_layout(w,h):
@@ -32,10 +33,11 @@ class TileMap(object):
 class SceneController(object):
     fps = 60
     
-    def __init__(self, viewport):
+    def __init__(self, viewport=None):
         self.viewport = viewport
         self.clock = pygame.time.Clock()
         self.entities = []
+        self.layers = []
         self.dt = 0
         
     def handle_events(self):
@@ -44,8 +46,9 @@ class SceneController(object):
     def tick(self):
         self.dt = self.clock.tick(self.fps)
         
-        self.update()
         self.handle_events()
+        self.update()
+        self.draw(self.viewport)
         
         pygame.display.flip()
         
@@ -54,11 +57,13 @@ class SceneController(object):
     def update(self):
         for entity in self.entities:
             entity.update(self)
-        
-        self.viewport.blit(self.tilemap.viewport, (12,12))
+    
+    def draw(self, surface):
+        for layer in self.layers:
+            surface.blit(layer.viewport, (12,12))
         
         for entity in self.entities:
-            self.viewport.blit(entity.viewport, entity.pos)
+            surface.blit(entity.viewport, entity.pos)
     
     @property
     def next(self):
@@ -83,20 +88,21 @@ class GameController(SceneController):
     def __init__(self, *args, **kwargs):
         super(GameController, self).__init__(*args, **kwargs)
         
-        self.tilemap = TileMap()
-        self.tilemap.render()
+        tilemap = TileMap()
+        tilemap.render()
+        
+        self.layers.append(tilemap)
         
         e = Entity()
         e.render()
         
         self.entities.append(e)
-        
 
 
 pygame.init()
 
-viewport = pygame.display.set_mode(config.RESOLUTION)
-scene = GameController(viewport)
+viewport = pygame.display.set_mode(RESOLUTION)
+scene = GameController(viewport=viewport)
 
 
 while scene:

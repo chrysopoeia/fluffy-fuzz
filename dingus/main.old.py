@@ -1,21 +1,33 @@
 import pygame
+import random
+
+RESOLUTION = (800, 600)
 
 
-def generate_map_layout(w, h):
+def generate_map_layout(w,h):
     return [[{}]*w for x in range(0,h)]
 
 
 class TileMap(object):
-    size = (12, 48)
+    size = (64, 48)
+    tile_size = (12, 12)
     
     def __init__(self, size=None):
-        self.size = size or self.size
+        w,h = self.size = size or self.size
+        tw,th = self.tile_size
+        
         self.tiles = generate_map_layout(*self.size)
-
-
-class Camera(object):
-    fov = (400, 300)
-    focus = (0, 0)
+        self.viewport = pygame.Surface((w*tw,h*th))
+        
+    def render(self):
+        tw,th = self.tile_size
+        
+        for row_num, row in enumerate(self.tiles):
+            for col_num, col in enumerate(row):
+                tile_color = (255, random.randint(0,255), 0)
+                tile_rect = (col_num*tw, row_num*th, tw, th)
+                
+                self.viewport.fill(tile_color, tile_rect)
 
 
 class SceneController(object):
@@ -24,35 +36,74 @@ class SceneController(object):
     def __init__(self, viewport):
         self.viewport = viewport
         self.clock = pygame.time.Clock()
-        self.camera = Camera()
-        self.map = TileMap()
-    
+        self.entities = []
+        self.layers = []
+        self.dt = 0
+        
     def handle_events(self):
         events = pygame.event.get()
-    
-    def tick(self):
-        dt = self.clock.tick(self.fps)
         
-        self.update(dt)
+    def tick(self):
+        self.dt = self.clock.tick(self.fps)
+        
         self.handle_events()
+        self.update()
+        self.draw(self.viewport)
         
         pygame.display.flip()
         
         return self.next
     
-    def update(self, dt):
-        pass
+    def update(self):
+        for entity in self.entities:
+            entity.update(self)
+    
+    def draw(self, surface):
+        for layer in self.layers:
+            surface.blit(layer.viewport, (12,12))
+        
+        for entity in self.entities:
+            surface.blit(entity.viewport, entity.pos)
     
     @property
     def next(self):
         return self
 
 
-resolution = (800, 600)
+class Entity(object):
+    pos = [200, 300]
+    radius = 3
+    
+    def update(self, scene):
+        self.pos[0] += 1
+    
+    def render(self):
+        self.viewport = pygame.Surface((self.radius*2, self.radius*2))
+        self.viewport.set_colorkey((0,0,0))
+        
+        pygame.draw.circle(self.viewport, (0,0,255), (self.radius, self.radius), self.radius)
+
+
+class GameController(SceneController):
+    def __init__(self, *args, **kwargs):
+        super(GameController, self).__init__(*args, **kwargs)
+        
+        tilemap = TileMap()
+        tilemap.render()
+        
+        self.layers.append(tilemap)
+        
+        e = Entity()
+        e.render()
+        
+        self.entities.append(e)
+
+
 pygame.init()
 
-viewport = pygame.display.set_mode(resolution)
-scene = SceneController(viewport)
+viewport = pygame.display.set_mode(RESOLUTION)
+scene = GameController(viewport)
+
 
 while scene:
     scene = scene.tick()
