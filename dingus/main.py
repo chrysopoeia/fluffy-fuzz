@@ -99,10 +99,49 @@ class GameController(SceneController):
         self.entities.append(e)
 
 
+class TestController(object):
+    def __init__(self, viewport):
+        self.viewport = viewport
+        
+        self.layout = [
+            ('actions', {
+                'size': (100, 0),
+                'pos': (0, 0),
+            }),
+            ('battlefield', {
+                'size': (-100, 0),
+                'pos': (100, 0),
+            })
+        ]
+        
+        vw,vh = viewport.get_size()
+        
+        for name, config in self.layout:
+            w,h = config.get('size') or (vw,vh)
+            x,y = config.get('pos') or (0,0)
+            
+            if w == 0: w = vw
+            elif w < 0: w += vw
+            if h == 0: h = vh
+            elif h < 0: h += vh
+            
+            layer = pygame.Surface((w,h))
+            layer.fill((255, random.randint(0,255), 0))
+            
+            self.viewport.blit(layer, (x,y))
+    
+    def tick(self):
+        events = pygame.event.get()
+        
+        pygame.display.flip()
+        
+        return self
+
+
 pygame.init()
 
 viewport = pygame.display.set_mode(RESOLUTION)
-scene = GameController(viewport=viewport)
+scene = TestController(viewport)
 
 
 while scene:
