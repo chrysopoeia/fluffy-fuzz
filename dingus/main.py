@@ -102,33 +102,31 @@ class GameController(SceneController):
 class TestController(object):
     def __init__(self, viewport):
         self.viewport = viewport
+        self.layers = []
         
-        self.layout = [
+        vw,vh = viewport.get_size()
+        
+        layout = [
             ('actions', {
-                'size': (100, 0),
+                'size': (100, vh),
                 'pos': (0, 0),
             }),
             ('battlefield', {
-                'size': (-100, 0),
+                'size': (vw-100, vh),
                 'pos': (100, 0),
             })
         ]
         
-        vw,vh = viewport.get_size()
-        
-        for name, config in self.layout:
+        for name, config in layout:
             w,h = config.get('size') or (vw,vh)
             x,y = config.get('pos') or (0,0)
-            
-            if w == 0: w = vw
-            elif w < 0: w += vw
-            if h == 0: h = vh
-            elif h < 0: h += vh
             
             layer = pygame.Surface((w,h))
             layer.fill((255, random.randint(0,255), 0))
             
-            self.viewport.blit(layer, (x,y))
+            self.layers.append((name, layer))
+            
+            # self.viewport.blit(layer, (x,y))
     
     def tick(self):
         events = pygame.event.get()
