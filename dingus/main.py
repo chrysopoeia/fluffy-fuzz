@@ -101,9 +101,6 @@ class GameController(SceneController):
 
 class View(pygame.Surface):
     position = (0,0)
-    
-    def render(self):
-        self.fill((255, 255, 255))
 
 
 class BaseController(object):
@@ -129,7 +126,7 @@ viewport = pygame.display.set_mode(RESOLUTION)
 scene = BaseController(viewport)
 
 v = View((200, 200))
-v.render()
+v.fill((255, 255, 255))
 
 scene.views.append(v)
 
