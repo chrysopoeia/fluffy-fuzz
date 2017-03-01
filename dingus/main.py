@@ -99,39 +99,25 @@ class GameController(SceneController):
         self.entities.append(e)
 
 
-class TestController(object):
-    def __init__(self, viewport):
-        self.viewport = viewport
-        self.layers = []
-        
-        vw,vh = viewport.get_size()
-        
-        layout = [
-            ('actions', {
-                'size': (100, vh),
-                'pos': (0, 0),
-            }),
-            ('battlefield', {
-                'size': (vw-100, vh),
-                'pos': (100, 0),
-            })
-        ]
-        
-        for name, config in layout:
-            w,h = config.get('size') or (vw,vh)
-            x,y = config.get('pos') or (0,0)
-            
-            layer = pygame.Surface((w,h))
-            layer.fill((255, random.randint(0,255), 0))
-            
-            self.layers.append((name, layer))
-            
-            # self.viewport.blit(layer, (x,y))
+class View(pygame.Surface):
+    position = (0,0)
     
-    def tick(self):
-        events = pygame.event.get()
+    def render(self):
+        self.fill((255, 255, 255))
+
+
+class BaseController(object):
+    def __init__(self, viewport=None):
+        self.viewport = viewport
+        self.views = []
+        self.controllers = []
+    
+    def tick(self, events, parent=None):
+        for controller in self.controllers:
+            controller.tick(events, self)
         
-        pygame.display.flip()
+        for view in self.views:
+            self.viewport.blit(view, view.position)
         
         return self
 
@@ -139,8 +125,18 @@ class TestController(object):
 pygame.init()
 
 viewport = pygame.display.set_mode(RESOLUTION)
-scene = TestController(viewport)
+
+scene = BaseController(viewport)
+
+v = View((200, 200))
+v.render()
+
+scene.views.append(v)
 
 
 while scene:
-    scene = scene.tick()
+    events = pygame.event.get()
+    
+    scene = scene.tick(events)
+    
+    pygame.display.flip()
