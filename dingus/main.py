@@ -120,17 +120,23 @@ class BaseController(object):
         return self
 
 
+class TestController(BaseController):
+    def __init__(self, viewport=None):
+        super(TestController, self).__init__(viewport=viewport)
+        
+        v = View(RESOLUTION)
+        v.name = 'main'
+        v.fill((255, 255, 255))
+        
+        self.views.append(v)
+
+
 pygame.init()
 
 viewport = pygame.display.set_mode(RESOLUTION)
 
-scene = BaseController(viewport)
+scene = TestController(viewport)
 
-v = View(RESOLUTION)
-v.name = 'main'
-v.fill((255, 255, 255))
-
-scene.views.append(v)
 
 
 while scene:
