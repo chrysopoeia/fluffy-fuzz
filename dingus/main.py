@@ -4,30 +4,25 @@ import random
 RESOLUTION = (800, 600)
 
 
-# def generate_map_layout(w,h):
-#     return [[{}]*w for x in range(0,h)]
+def generate_map_layout(w,h):
+    return [[{}]*w for x in range(0,h)]
 
 
-# class TileMap(object):
-#     size = (64, 48)
-#     tile_size = (12, 12)
+class TileMap(object):
+    def __init__(self, size=(64, 48), tile_size=(12, 12)):
+        self.size = size
+        self.tile_size = tile_size
     
-#     def __init__(self, size=None):
-#         w,h = self.size = size or self.size
-#         tw,th = self.tile_size
+    def render(self, surface):
+        tiles = generate_map_layout(*self.size)
+        tw,th = self.tile_size
         
-#         self.tiles = generate_map_layout(*self.size)
-#         self.viewport = pygame.Surface((w*tw,h*th))
-        
-#     def render(self):
-#         tw,th = self.tile_size
-        
-#         for row_num, row in enumerate(self.tiles):
-#             for col_num, col in enumerate(row):
-#                 tile_color = (255, random.randint(0,255), 0)
-#                 tile_rect = (col_num*tw, row_num*th, tw, th)
+        for row_num, row in enumerate(tiles):
+            for col_num, col in enumerate(row):
+                tile_color = (255, random.randint(0,255), 0)
+                tile_rect = (col_num*tw, row_num*th, tw, th)
                 
-#                 self.viewport.fill(tile_color, tile_rect)
+                surface.fill(tile_color, tile_rect)
 
 
 # class SceneController(object):
@@ -100,8 +95,11 @@ RESOLUTION = (800, 600)
 
 
 class View(pygame.Surface):
-    name = 'default'
-    position = (0,0)
+    def __init__(self, size, position=(0,0), name=None):
+        super(View, self).__init__(size)
+        
+        self.name = name
+        self.position = position
 
 
 class BaseController(object):
@@ -124,19 +122,25 @@ class TestController(BaseController):
     def __init__(self, viewport=None):
         super(TestController, self).__init__(viewport=viewport)
         
-        v = View(RESOLUTION)
-        v.name = 'main'
-        v.fill((255, 255, 255))
+        v = View(RESOLUTION, name='battlefield')
+        battle = BattleController(viewport=v)
         
+        self.controllers.append(battle)
         self.views.append(v)
+
+
+class BattleController(BaseController):
+    def __init__(self, viewport=None):
+        super(BattleController, self).__init__(viewport=viewport)
+        
+        tm = TileMap()
+        tm.render(self.viewport)
 
 
 pygame.init()
 
 viewport = pygame.display.set_mode(RESOLUTION)
-
 scene = TestController(viewport)
-
 
 
 while scene:
