@@ -131,12 +131,15 @@ class TestController(BaseController):
         self.views.append(v)
 
 
+class EnvController(BaseController):
+    pass
+
+
 pygame.init()
 
 viewport = pygame.display.set_mode(RESOLUTION)
 
 scene = TestController(viewport)
-
 
 
 while scene:
