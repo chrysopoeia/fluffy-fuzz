@@ -29,15 +29,16 @@ class Entity(pygame.sprite.Sprite):
     def __init__(self, *args, **kwargs):
         super(Entity, self).__init__(*args, **kwargs)
         
-        self.radius = random.randint(1,8)
+        self.radius = random.randint(1,4)
+        
         self.image = pygame.Surface((self.radius*2, self.radius*2))
         self.image.set_colorkey((0,0,0))
         
         self.rect = self.image.get_rect().move(400, 300)
-        self.velo = random.randint(1,4)
+        self.velo = random.randint(1,self.radius)
         
-        c = random.randint(1,200)
-        pygame.draw.circle(self.image, (c, c, random.randint(c,255)), (self.radius, self.radius), self.radius)
+        bc = random.randint(1,200)
+        pygame.draw.circle(self.image, (bc, bc, random.randint(bc,255)), (self.radius, self.radius), self.radius)
         
     def update(self, *args, **kwargs):
         self.rect = self.rect.move(random.randint(-1*self.velo,self.velo), random.randint(-1*self.velo,self.velo))
@@ -71,12 +72,11 @@ class GameController(BaseController):
     def __init__(self, viewport=None):
         super(GameController, self).__init__(viewport=viewport)
         
-        v = View(RESOLUTION, name='battlefield')
-        battle = BattleController(viewport=v)
+        view = View(RESOLUTION, name='battlefield')
+        battle = BattleController(viewport=view)
         
         self.controllers.append(battle)
-        self.views.append(v)
-
+        self.views.append(view)
 
 
 class BattleController(BaseController):
@@ -86,16 +86,16 @@ class BattleController(BaseController):
         tm = TileMap()
         tm.render(self.viewport)
         
-        self.g = pygame.sprite.Group()
+        self.entities = pygame.sprite.Group()
         
         for x in xrange(0, 200):
-            self.g.add(Entity())
+            self.entities.add(Entity())
     
     def tick(self, events, parent=None):
         super(BattleController, self).tick(events, parent=None)
         
-        self.g.update()
-        self.g.draw(self.viewport)
+        self.entities.update()
+        self.entities.draw(self.viewport)
 
 
 pygame.init()
