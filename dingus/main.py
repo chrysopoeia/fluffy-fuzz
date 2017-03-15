@@ -25,73 +25,22 @@ class TileMap(object):
                 surface.fill(tile_color, tile_rect)
 
 
-# class SceneController(object):
-#     fps = 60
-    
-#     def __init__(self, viewport=None):
-#         self.viewport = viewport
-#         self.clock = pygame.time.Clock()
-#         self.entities = []
-#         self.layers = []
-#         self.dt = 0
+class Entity(pygame.sprite.Sprite):
+    def __init__(self, *args, **kwargs):
+        super(Entity, self).__init__(*args, **kwargs)
         
-#     def handle_events(self):
-#         events = pygame.event.get()
+        self.radius = random.randint(1,8)
+        self.image = pygame.Surface((self.radius*2, self.radius*2))
+        self.image.set_colorkey((0,0,0))
         
-#     def tick(self):
-#         self.dt = self.clock.tick(self.fps)
+        self.rect = self.image.get_rect().move(400, 300)
+        self.velo = random.randint(1,4)
         
-#         self.handle_events()
-#         self.update()
-#         self.draw(self.viewport)
+        c = random.randint(1,200)
+        pygame.draw.circle(self.image, (c, c, random.randint(c,255)), (self.radius, self.radius), self.radius)
         
-#         pygame.display.flip()
-        
-#         return self.next
-    
-#     def update(self):
-#         for entity in self.entities:
-#             entity.update(self)
-    
-#     def draw(self, surface):
-#         for layer in self.layers:
-#             surface.blit(layer.viewport, (12,12))
-        
-#         for entity in self.entities:
-#             surface.blit(entity.viewport, entity.pos)
-    
-#     @property
-#     def next(self):
-#         return self
-
-
-# class Entity(object):
-#     pos = [200, 300]
-#     radius = 3
-    
-#     def update(self, scene):
-#         self.pos[0] += 1
-    
-#     def render(self):
-#         self.viewport = pygame.Surface((self.radius*2, self.radius*2))
-#         self.viewport.set_colorkey((0,0,0))
-        
-#         pygame.draw.circle(self.viewport, (0,0,255), (self.radius, self.radius), self.radius)
-
-
-# class GameController(SceneController):
-#     def __init__(self, *args, **kwargs):
-#         super(GameController, self).__init__(*args, **kwargs)
-        
-#         tilemap = TileMap()
-#         tilemap.render()
-        
-#         self.layers.append(tilemap)
-        
-#         e = Entity()
-#         e.render()
-        
-#         self.entities.append(e)
+    def update(self, *args, **kwargs):
+        self.rect = self.rect.move(random.randint(-1*self.velo,self.velo), random.randint(-1*self.velo,self.velo))
 
 
 class View(pygame.Surface):
@@ -118,9 +67,9 @@ class BaseController(object):
         return self
 
 
-class TestController(BaseController):
+class GameController(BaseController):
     def __init__(self, viewport=None):
-        super(TestController, self).__init__(viewport=viewport)
+        super(GameController, self).__init__(viewport=viewport)
         
         v = View(RESOLUTION, name='battlefield')
         battle = BattleController(viewport=v)
@@ -136,12 +85,23 @@ class BattleController(BaseController):
         
         tm = TileMap()
         tm.render(self.viewport)
+        
+        self.g = pygame.sprite.Group()
+        
+        for x in xrange(0, 200):
+            self.g.add(Entity())
+    
+    def tick(self, events, parent=None):
+        super(BattleController, self).tick(events, parent=None)
+        
+        self.g.update()
+        self.g.draw(self.viewport)
 
 
 pygame.init()
 
 viewport = pygame.display.set_mode(RESOLUTION)
-scene = TestController(viewport)
+scene = GameController(viewport)
 
 
 while scene:
