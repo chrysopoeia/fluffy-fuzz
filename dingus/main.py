@@ -1,6 +1,9 @@
 import pygame
 import random
 
+from lib import View, BaseController
+
+
 RESOLUTION = (800, 600)
 
 
@@ -42,30 +45,6 @@ class Entity(pygame.sprite.Sprite):
         
     def update(self, *args, **kwargs):
         self.rect = self.rect.move(random.randint(-1*self.velo,self.velo), random.randint(-1*self.velo,self.velo))
-
-
-class View(pygame.Surface):
-    def __init__(self, size, position=(0,0), name=None):
-        super(View, self).__init__(size)
-        
-        self.name = name
-        self.position = position
-
-
-class BaseController(object):
-    def __init__(self, viewport=None):
-        self.viewport = viewport
-        self.views = []
-        self.controllers = []
-    
-    def tick(self, events, parent=None):
-        for controller in self.controllers:
-            controller.tick(events, self)
-        
-        for view in self.views:
-            self.viewport.blit(view, view.position)
-        
-        return self
 
 
 class GameController(BaseController):
